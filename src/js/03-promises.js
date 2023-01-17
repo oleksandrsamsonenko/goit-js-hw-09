@@ -10,31 +10,45 @@ function createPromise(position, delay) {
   delay = +delayInput.value + position * delay;
   position += 1;
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (shouldResolve) {
-        resolve({ position, delay });
-        // Fulfill
-      } else {
-        reject({ position, delay });
-        // Reject
-      }
-    }, delayInput.value);
+    // setTimeout(() => {
+    if (shouldResolve) {
+      resolve({ position, delay });
+      // Fulfill
+    } else {
+      reject({ position, delay });
+      // Reject
+    }
+    // }, delayInput.value);
   });
 }
 
 submitBtn.addEventListener(`click`, () => {
   event.preventDefault();
+  // let startSec = new Date();
+  // console.log(startSec.getSeconds());
   for (let i = 0; i < amountInput.value; i += 1) {
     setTimeout(() => {
       createPromise(i, stepInput.value)
         .then(({ position, delay }) => {
+          // let currentSec = new Date();
+          // console.log(currentSec.getSeconds());
           Notiflix.Notify.success(
-            `Fulfilled promise ${position} in ${delay}ms`
+            `✅ Fulfilled promise ${position} in ${delay}ms`,
+            {
+              useIcon: false,
+            }
           );
           // console.log(`✅ Fulfilled promise ${position} in ${delay}ms`);
         })
         .catch(({ position, delay }) => {
-          Notiflix.Notify.failure(`Rejected promise ${position} in ${delay}ms`);
+          // let currentSec = new Date();
+          // console.log(currentSec.getSeconds());
+          Notiflix.Notify.failure(
+            `❌ Rejected promise ${position} in ${delay}ms`,
+            {
+              useIcon: false,
+            }
+          );
           // console.log(`❌ Rejected promise ${position} in ${delay}ms`);
         });
     }, +delayInput.value + i * stepInput.value);
