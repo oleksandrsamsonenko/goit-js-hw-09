@@ -53,13 +53,25 @@ function addLeadingZero(value) {
 }
 
 function onStartHandler() {
-  setInterval(() => {
+  let timerInterval = setInterval(() => {
     const timeDifference = selectedDate - Date.now();
+    // console.log(convertMs(timeDifference).seconds);
+    if (convertMs(timeDifference).seconds === -1) {
+      //   days.textContent = addLeadingZero(convertMs(timeDifference).days);
+      //   hours.textContent = addLeadingZero(convertMs(timeDifference).hours);
+      //   minutes.textContent = addLeadingZero(convertMs(timeDifference).minutes);
+      //   seconds.textContent = addLeadingZero(convertMs(timeDifference).seconds);
+      clearInterval(timerInterval);
+      return;
+    }
+
     days.textContent = addLeadingZero(convertMs(timeDifference).days);
     hours.textContent = addLeadingZero(convertMs(timeDifference).hours);
     minutes.textContent = addLeadingZero(convertMs(timeDifference).minutes);
     seconds.textContent = addLeadingZero(convertMs(timeDifference).seconds);
   }, 1000);
+
+  //   setTimeout(() => clearInterval(timerInterval), selectedDate - Date.now());
   // inputField.setAttribute(`disabled`, '');
 }
 
