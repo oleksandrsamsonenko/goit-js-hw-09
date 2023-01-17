@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
 
 const inputField = document.querySelector(`input`);
 const startBtn = document.querySelector(`button`);
@@ -17,9 +18,12 @@ const options = {
   onChange(selectedDates) {
     selectedDate = selectedDates[0].getTime();
     if (selectedDate < Date.now()) {
-      window.alert(`Please choose a date in the future`);
+      Notiflix.Notify.warning('Please choose a date in the future');
+
       startBtn.setAttribute(`disabled`, '');
     } else {
+      Notiflix.Notify.info('Date you choose is valid');
+
       startBtn.removeAttribute(`disabled`);
     }
   },
@@ -56,6 +60,7 @@ function onStartHandler() {
     minutes.textContent = addLeadingZero(convertMs(timeDifference).minutes);
     seconds.textContent = addLeadingZero(convertMs(timeDifference).seconds);
   }, 1000);
+  // inputField.setAttribute(`disabled`, '');
 }
 
 startBtn.setAttribute(`disabled`, '');
